@@ -33,7 +33,7 @@ export default function Home() {
             <div className="carousel-caption d-none d-md-block" style={{ zIndex: "10" }}>
               <form className="d-flex justify-content-center">
                 <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search" value={search} onChange={(e) => {setSearch(e.target.value)}}/>
-                <button className="btn btn-outline-success text-white bg-success" type="submit">Search</button>
+                {/* <button className="btn btn-outline-success text-white bg-success" type="submit">Search</button> */}
               </form>
             </div>
             <div className="carousel-item active">
