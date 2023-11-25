@@ -70,9 +70,8 @@ export default function Home() {
                         .map(filterItem => {
                           return (
                             <div key={filterItem._id} className='col-md-6 col-lg-3'>
-                              <Card foodName={filterItem.name}
+                              <Card foodItem={filterItem}
                                 options={filterItem.options[0]}
-                                imgSrc={filterItem.img}
                               /></div>
                           )
                         }) : <div>No such data found</div>
