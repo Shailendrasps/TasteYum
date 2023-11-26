@@ -27,7 +27,7 @@ export default function Signup() {
     }
     return (
         <> 
-        <div className='container'>
+        <div className='container mt-5'>
             <form onSubmit={submitHandeler}>
                 <div className="mb-3 form-group">
                     <label htmlFor="name">Name</label>

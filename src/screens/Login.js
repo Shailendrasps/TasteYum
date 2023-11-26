@@ -32,7 +32,7 @@ export default function Login() {
 
   return (
     <div>
-      <div className='container'>
+      <div className='container mt-5'>
         <form onSubmit={submitHandeler}>
           <div className="mb-3 form-group">
             <label htmlFor="email">Email address</label>
