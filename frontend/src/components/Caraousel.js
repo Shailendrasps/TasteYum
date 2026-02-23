@@ -1,4 +1,3 @@
-import { Carousel } from 'bootstrap/dist/js/bootstrap.bundle'
 import React from 'react'
 
 export default function Caraousel() {

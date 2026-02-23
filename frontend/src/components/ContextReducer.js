@@ -1,5 +1,4 @@
 import React, { createContext, useContext, useReducer } from 'react'
-import { act } from 'react-dom/test-utils';
 
 const CartStateContext = createContext();
 const CartDispatchContext = createContext();
@@ -17,7 +16,7 @@ const reducer = (state, action) => {
             return newArr;
         case "UPDATE":
             let arr = [...state];
-            arr.find((food, index) => {
+            arr.forEach((food, index) => {
                 if (food.id === action.id) {
                     arr[index] = { ...food, qty: parseInt(action.qty) + food.qty, price: action.price + food.price }
                 }
