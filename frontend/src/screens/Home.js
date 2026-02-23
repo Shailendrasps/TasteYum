@@ -10,15 +10,19 @@ export default function Home() {
   const [search,setSearch] = useState("");
 
   const loadData = async () => {
-    let response = await fetch('http://localhost:5000/api/foodData', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    })
-    response = await response.json();
-    setFoodCat(response[1]);
-    setFoodItems(response[0]);
+    try {
+      let response = await fetch(`${process.env.REACT_APP_API_URL}/api/foodData`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+      response = await response.json();
+      setFoodCat(response[1] || []);
+      setFoodItems(response[0] || []);
+    } catch (e) {
+      console.error("Failed to load food data:", e);
+    }
   }
   useEffect(() => {
     loadData()
@@ -37,13 +41,13 @@ export default function Home() {
               </form>
             </div>
             <div className="carousel-item active">
-              <img src="https://source.unsplash.com/random/900×700/?burger" className="d-block w-100" alt="..." />
+              <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=900&h=700&fit=crop" className="d-block w-100" alt="Burger" />
             </div>
             <div className="carousel-item">
-              <img src="https://source.unsplash.com/random/900×700/?fruit" className="d-block w-100" alt="..." />
+              <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=900&h=700&fit=crop" className="d-block w-100" alt="Food platter" />
             </div>
             <div className="carousel-item">
-              <img src="https://source.unsplash.com/random/900×700/?momos" className="d-block w-100" alt="..." />
+              <img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=900&h=700&fit=crop" className="d-block w-100" alt="Pizza" />
             </div>
           </div>
           <button className="carousel-control-prev" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="prev">

@@ -4,7 +4,7 @@ const User = require('../models/User.js');
 const { body, validationResult } = require('express-validator');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const jwtSecret = "Thistokenisforauthorizingpeople#123";
+const jwtSecret = process.env.JWT_SECRET;
 
 router.post('/createuser',
     body('email', 'Incorrect Email Format').isEmail(),
@@ -13,8 +13,14 @@ router.post('/createuser',
         try {
             const errors = validationResult(req);
             if (!errors.isEmpty()) {
-                return res.status(400).json({ errors: errors.array() });
+                return res.status(400).json({ success: false, message: errors.array()[0].msg });
             }
+
+            const existingUser = await User.findOne({ email: req.body.email });
+            if (existingUser) {
+                return res.status(400).json({ success: false, message: "A user with this email already exists." });
+            }
+
             const salt = await bcrypt.genSalt(10);
             let secPassword = await bcrypt.hash(req.body.password, salt);
 
@@ -23,7 +29,8 @@ router.post('/createuser',
                 email: req.body.email,
                 password: secPassword,
                 location: req.body.location,
-            }).then(res.json({ success: true }))
+            });
+            return res.json({ success: true });
 
         } catch (error) {
             console.log(error);
@@ -45,7 +52,7 @@ router.post('/loginuser',
             if (!userData) {
                 return res.status(400).json({ errors: 'Enter valid credentials for logging' })
             }
-            const pwdCompare = bcrypt.compare(req.body.password, userData.password);
+            const pwdCompare = await bcrypt.compare(req.body.password, userData.password);
             const data = {
                 user: {
                     id: userData.id
